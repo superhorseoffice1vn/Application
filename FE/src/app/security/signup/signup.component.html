@@ -16,7 +16,7 @@
         <h3 class="tile-title">Tạo mới nhân viên</h3>
         <div class="tile-body">
           <form class="row" [formGroup]="rfAddUser" (ngSubmit)="create()">
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-6">
               <label class="control-label">Họ và tên</label>
               <input class="form-control" type="text" formControlName="name"
                      [ngClass]="(rfAddUser.controls['name'].touched)?
@@ -25,50 +25,12 @@
                                      rfAddUser.controls['name'].touched" style="color: red ; float:left;">
                 Họ và tên không được để trống.
               </div>
-              <div *ngIf="rfAddUser.controls['name'].hasError('pattern') &&
-                                     rfAddUser.controls['name'].touched && !rfAddUser.controls['name'].hasError('maxlength')"
-                   style="color: red ; float:left;">
-                Họ và tên không hợp lệ. Ví dụ: Nguyễn Văn A
-              </div>
               <div *ngIf="rfAddUser.controls['name'].hasError('maxlength') &&
                                      rfAddUser.controls['name'].touched" style="color: red ; float:left;">
                 Họ và tên quá dài.
               </div>
             </div>
-            <div class="form-group col-md-4">
-              <label class="control-label">Số CCCD</label>
-              <input class="form-control" type="text" formControlName="idCard"
-                     [ngClass]="(rfAddUser.controls['idCard'].touched)?
-                      rfAddUser.controls['idCard'].invalid?'is-invalid':'is-valid':''"/>
-              <div *ngIf="rfAddUser.controls['idCard'].hasError('required') &&
-                                     rfAddUser.controls['idCard'].touched" style="color: red ; float:left;">
-                Căn cước công dân không được để trống.
-              </div>
-            </div>
-            <div class="form-group col-md-4">
-              <label class="control-label">Địa chỉ</label>
-              <input class="form-control" type="text" formControlName="address"
-                     [ngClass]="(rfAddUser.controls['address'].touched)?
-                      rfAddUser.controls['address'].invalid?'is-invalid':'is-valid':''"/>
-              <div *ngIf="rfAddUser.controls['address'].hasError('required') &&
-                                     rfAddUser.controls['address'].touched" style="color: red ; float:left;">
-                Địa chỉ không được để trống.
-              </div>
-            </div>
-            <div class="form-group col-md-4">
-              <label class="control-label">Giới tính</label>
-              <select class="form-control" id="exampleSelect2" formControlName="gender"
-                      [ngClass]="(rfAddUser.controls['gender'].touched)?
-                      rfAddUser.controls['gender'].invalid?'is-invalid':'is-valid':''">
-                <option value="" disabled selected>-- Chọn giới tính --</option>
-                <option *ngFor="let option of genderOptions" [value]="option">{{ option }}</option>
-              </select>
-              <div *ngIf="rfAddUser.controls['gender'].hasError('required') &&
-             rfAddUser.controls['gender'].touched" style="color: red; margin-top: 5px;">
-                Giới tính không được để trống.
-              </div>
-            </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-6">
               <label class="control-label">Số điện thoại</label>
               <input class="form-control" type="text" formControlName="phoneNumber"
                      [ngClass]="(rfAddUser.controls['phoneNumber'].touched)?
@@ -78,36 +40,7 @@
                 Số điện thoại không được để trống.
               </div>
             </div>
-            <div class="form-group col-md-4">
-              <label class="control-label">Ngày sinh</label>
-              <input class="form-control" type="date" formControlName="birthDay"
-                     [ngClass]="(rfAddUser.controls['birthDay'].touched)?
-                             (rfAddUser.controls['birthDay'].invalid|| rfAddUser.errors?.['checkBirthDay'])?'is-invalid':'is-valid':''"/>
-              <div *ngIf="rfAddUser.controls['birthDay'].hasError('required') &&
-                                     rfAddUser.controls['birthDay'].touched" style="color: red ; float:left;">
-                Ngày sinh không được để trống.
-              </div>
-              <div *ngIf="rfAddUser.errors?.['checkBirthDay']"
-                   style="color: red ; float:left;">
-                Độ tuổi trong khoảng 18->100.
-              </div>
-            </div>
-            <!-- Inside your template -->
-            <div class="form-group col-md-4">
-              <label class="control-label">Chức vụ</label>
-              <select class="form-control" formControlName="idUserType"
-                      [ngClass]="(rfAddUser.controls['idUserType'].touched)?
-                      rfAddUser.controls['idUserType'].invalid?'is-invalid':'is-valid':''">
-                <option value="" disabled selected>-- Chọn chức vụ --</option>
-                <option *ngFor="let option of idTypeUserOptions" [value]="option.value">{{ option.label }}</option>
-              </select>
-              <div *ngIf="rfAddUser.controls['idUserType'].hasError('required') &&
-             rfAddUser.controls['idUserType'].touched" style="color: red; margin-top: 5px;">
-                Chức vụ không được để trống.
-              </div>
-            </div>
-
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-6">
               <label class="control-label">Tài khoản</label>
               <input class="form-control" #checkName1 (ngModelChange)="checkUsername(checkName1.value)" type="text" formControlName="username"
                      [ngClass]="(rfAddUser.controls['username'].touched)?
@@ -129,7 +62,7 @@
                 Tài khoản quá dài.
               </div>
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-6">
               <label class="control-label">Mật khẩu</label>
               <input class="form-control" type="password" formControlName="password"
                      [ngClass]="(rfAddUser.controls['password'].touched)?
@@ -149,7 +82,7 @@
             </div>
             <div class="form-group col-md-4">
               <button class="btn btn-save" type="submit" [disabled]="(!rfAddUser.valid)">Lưu lại</button>
-              <a class="btn btn-cancel" href="/doc/table-data-table.html">Hủy bỏ</a>
+              <a class="btn btn-cancel" routerLink="/listEmployee">Hủy bỏ</a>
             </div>
           </form>
         </div>
@@ -158,6 +91,3 @@
     </div>
   </div>
 </main>
-
-
-<!-- Các phần khác của component -->

@@ -39,6 +39,7 @@ export class LoginComponent implements OnInit {
 
   login(): void {
     this.authService.login(this.rfLogin.value).subscribe(data => {
+      console.log("lỗi rồi")
       if (data.token !== undefined) {
 
         if (this.rfLogin.value.rememberMe) {
@@ -50,7 +51,7 @@ export class LoginComponent implements OnInit {
           this.tokenService.setRoleSession(data.roles);
         }
 
-        this.router.navigate(['/sidebar']).then(() => {
+        this.router.navigate(['/detail']).then(() => {
           location.reload();
         });
 

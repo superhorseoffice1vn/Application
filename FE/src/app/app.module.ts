@@ -10,13 +10,17 @@ import {HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastrModule} from "ngx-toastr";
+import { ListComponent } from './component/employee/list/list.component';
+import { DetailComponent } from './component/employee/detail/detail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     SignupComponent,
-    SidebarComponent
+    SidebarComponent,
+    ListComponent,
+    DetailComponent
   ],
   imports: [
     BrowserModule,

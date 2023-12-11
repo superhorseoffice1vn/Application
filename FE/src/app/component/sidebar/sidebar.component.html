@@ -14,17 +14,15 @@
   <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="https://thespiritofsaigon.net/wp-content/uploads/2022/10/avatar-vo-danh-51.jpg" width="50px"
                                       alt="User Image">
     <div>
-      <p class="app-sidebar__user-name" style="color: white"><b>{{nameAccount}}g</b></p>
+      <p class="app-sidebar__user-name" style="color: white"><b>{{nameAccount}}</b></p>
       <p class="app-sidebar__user-designation" style="color: white">Chào mừng bạn trở lại</p>
     </div>
   </div>
   <hr>
   <ul class="app-menu">
-    <li><a class="app-menu__item haha" href="phan-mem-ban-hang.html"><i class='app-menu__icon bx bx-cart-alt'></i>
-      <span class="app-menu__label">POS Bán Hàng</span></a></li>
-    <li><a class="app-menu__item " href="index.html"><i class='app-menu__icon bx bx-tachometer'></i><span
-      class="app-menu__label">Bảng điều khiển</span></a></li>
-    <li><a class="app-menu__item active" href="table-data-table.html"><i class='app-menu__icon bx bx-id-card'></i>
+    <li><a class="app-menu__item " routerLink="/detail"><i class='app-menu__icon bx bx bx-user'></i><span
+      class="app-menu__label">Thông tin cá nhân</span></a></li>
+    <li><a class="app-menu__item" *ngIf="checkLogin && accountRole == 'ROLE_ADMIN'" routerLink="/listEmployee"><i class='app-menu__icon bx bx-id-card'></i>
       <span class="app-menu__label">Quản lý nhân viên</span></a></li>
     <li><a class="app-menu__item" href="#"><i class='app-menu__icon bx bx-user-voice'></i><span
       class="app-menu__label">Quản lý khách hàng</span></a></li>

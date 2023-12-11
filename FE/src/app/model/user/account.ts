@@ -1,5 +1,5 @@
 export interface Account {
-  userName: string;
+  username: string;
   password: string;
 
 }
