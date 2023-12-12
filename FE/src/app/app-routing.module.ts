@@ -7,6 +7,8 @@ import {AdminService} from "./security/guard/admin.service";
 import {SidebarComponent} from "./component/sidebar/sidebar.component";
 import {ListComponent} from "./component/employee/list/list.component";
 import {DetailComponent} from "./component/employee/detail/detail.component";
+import {CreateComponent} from "./component/Agent/create/create.component";
+import {ListEmployeeComponent} from "./component/Agent/list-employee/list-employee.component";
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -14,6 +16,8 @@ const routes: Routes = [
   {path: 'listEmployee', component: ListComponent, canActivate: [AdminService]},
   {path: 'detail', component: DetailComponent},
   {path: 'sidebar', component: SidebarComponent},
+  {path: 'createAgent', component: CreateComponent},
+  {path: 'agentsEmployee', component: ListEmployeeComponent},
 ];
 
 @NgModule({

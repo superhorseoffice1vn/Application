@@ -37,7 +37,6 @@ export class DetailComponent implements OnInit {
 
   // tslint:disable-next-line:typedef
   detail() {
-    console.log(this.detailUser)
     this.detailUser = JSON.parse(this.tokenService.getUser());
     // @ts-ignore
     this.employeeService.detailUser(this.detailUser.id).subscribe(data => {

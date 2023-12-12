@@ -34,6 +34,9 @@ export class SidebarComponent implements OnInit {
         if (roles[i] === 'ROLE_ADMIN') {
           this.accountRole = 'ROLE_ADMIN';
         }
+        else if (roles.includes('ROLE_USER')) {
+          this.accountRole = 'ROLE_USER';
+        }
       }
     }
 

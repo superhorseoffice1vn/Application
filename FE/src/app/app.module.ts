@@ -12,6 +12,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastrModule} from "ngx-toastr";
 import { ListComponent } from './component/employee/list/list.component';
 import { DetailComponent } from './component/employee/detail/detail.component';
+import { CreateComponent } from './component/Agent/create/create.component';
+import { ListEmployeeComponent } from './component/Agent/list-employee/list-employee.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { DetailComponent } from './component/employee/detail/detail.component';
     SignupComponent,
     SidebarComponent,
     ListComponent,
-    DetailComponent
+    DetailComponent,
+    CreateComponent,
+    ListEmployeeComponent
   ],
   imports: [
     BrowserModule,
