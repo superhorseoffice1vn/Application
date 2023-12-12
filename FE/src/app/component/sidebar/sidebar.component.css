@@ -1,0 +1,27 @@
+/* sidebar.component.css */
+
+.app-sidebar__toggle {
+  /* Thêm các thuộc tính CSS cho nút toggle */
+
+}
+
+.app-sidebar {
+  /* Thêm các thuộc tính CSS cho sidebar */
+}
+
+.app-sidebar__overlay {
+  /* Thêm các thuộc tính CSS cho overlay */
+}
+
+/* Thêm styles cho hiệu ứng sidebar animation */
+.app-sidebar {
+  transition: margin-left 0.3s;
+}
+
+.app-sidebar.open {
+  margin-left: 0;
+}
+
+.app-sidebar.closed {
+  margin-left: -250px; /* Kích thước của sidebar khi thu vô */
+}
