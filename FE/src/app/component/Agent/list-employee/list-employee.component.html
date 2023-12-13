@@ -57,11 +57,13 @@
               <td style="text-align: center;"><a href="{{item.locationGoogleMap}}">
                 <img src="https://play-lh.googleusercontent.com/Kf8WTct65hFJxBUDm5E-EpYsiDoLQiGGbnuyP6HBNax43YShXti9THPon1YKB6zPYpA" alt=""
                                                             style="width: 45px; height: 45px; border-radius: 50%; border: 1px solid #ccc; padding: 2px;"></a></td>
-              <td  class="table-td-center"><button class="btn btn-primary btn-sm trash" type="button" title="Xóa"
-                                                  onclick="myFunction(this)"><i class="fas fa-trash-alt"></i>
+              <td  class="table-td-center">
+                <button class="btn btn-primary btn-sm trash" type="button" title="Xóa" onclick="myFunction(this)">
+                  <i class="fas fa-trash-alt"></i>
               </button>
                 <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp"
-                        data-toggle="modal" data-target="#ModalUP"><i class="fas fa-edit"></i>
+                        data-toggle="modal" data-target="#ModalUP" [routerLink]="['/editAgent/', item.id]">
+                  <i class="fas fa-edit"></i>
                 </button>
               </td>
             </tr>

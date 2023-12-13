@@ -28,4 +28,12 @@ export class AgentService {
     });
     return this.httpClient.post<any>(this.api_url + '/listAdmin' + '?page=' + pageNumber, search,{ headers });
   }
+
+  agentById(id: number | undefined): Observable<any> {
+    return this.httpClient.get<any>(this.api_url + "/" + id);
+  }
+
+  updateAgent(agent: any, id: string): Observable<any> {
+    return this.httpClient.put<any>(this.api_url + '/update/' + id, agent);
+  }
 }

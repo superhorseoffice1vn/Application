@@ -10,6 +10,7 @@ import {DetailComponent} from "./component/employee/detail/detail.component";
 import {CreateComponent} from "./component/Agent/create/create.component";
 import {ListEmployeeComponent} from "./component/Agent/list-employee/list-employee.component";
 import {ListAdminComponent} from "./component/Agent/list-admin/list-admin.component";
+import {EditComponent} from "./component/Agent/edit/edit.component";
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -20,6 +21,7 @@ const routes: Routes = [
   {path: 'createAgent', component: CreateComponent},
   {path: 'agentsEmployee', component: ListEmployeeComponent},
   {path: 'agentsAdmin', component: ListAdminComponent},
+  {path: 'editAgent/:id', component: EditComponent},
 ];
 
 @NgModule({
