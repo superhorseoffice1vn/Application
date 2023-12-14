@@ -1,0 +1,61 @@
+
+<app-sidebar></app-sidebar>
+
+<main class="app-content">
+  <div class="app-title" style="margin-top: 40px">
+    <ul class="app-breadcrumb breadcrumb">
+      <li class="breadcrumb-item">Quản lý nhân viên</li>
+      <li class="breadcrumb-item"><a routerLink="/createAgent">Chỉnh sửa thông tin nhân viên</a></li>
+    </ul>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+
+      <div class="tile">
+
+        <h3 class="tile-title">Chỉnh sửa thông tin nhân viên</h3>
+        <div class="tile-body">
+          <form class="row" [formGroup]="formEditEmployee" (ngSubmit)="updateProduct(id)">
+            <div class="form-group col-md-6">
+              <label class="control-label">Họ và tên</label>
+              <input class="form-control" type="text" formControlName="name"/>
+              <div *ngIf="formEditEmployee.controls['name'].hasError('required') &&
+                                     formEditEmployee.controls['name'].touched" style="color: red ; float:left;">
+                Họ và tên không được để trống.
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <label class="control-label">Số điện thoại</label>
+              <input class="form-control" type="text" formControlName="phoneNumber"/>
+              <div *ngIf="formEditEmployee.controls['phoneNumber'].hasError('required') &&
+                                     formEditEmployee.controls['phoneNumber'].touched" style="color: red ; float:left;">
+                Số điện thoại không được để trống.
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <label class="control-label">Tài khoản</label>
+              <input class="form-control" type="text" formControlName="username"/>
+              <div *ngIf="formEditEmployee.controls['username'].hasError('required') &&
+                                     formEditEmployee.controls['username'].touched" style="color: red ; float:left;">
+                Tài khoản không được để trống.
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              <label class="control-label">Mật khẩu</label>
+              <input class="form-control" type="password" formControlName="password"/>
+              <div *ngIf="formEditEmployee.controls['password'].hasError('required') &&
+                                     formEditEmployee.controls['password'].touched" style="color: red ; float:left;">
+                Mật khẩu không được để trống.
+              </div>
+            </div>
+            <div class="form-group col-md-6" style="display: flex; align-items: flex-end;">
+              <button class="btn btn-save" type="submit" [disabled]="(!formEditEmployee.valid)">Lưu lại</button>
+              <a class="btn btn-cancel" routerLink="/listEmployee">Hủy bỏ</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>

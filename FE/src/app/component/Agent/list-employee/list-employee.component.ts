@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {AgentService} from "../../../service/agent/agent.service";
 import {TokenService} from "../../../service/security/token.service";
 import {User} from "../../../model/user/user";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-list-employee',
@@ -51,6 +52,34 @@ export class ListEmployeeComponent implements OnInit {
   // tslint:disable-next-line:typedef
   gotoPage(pageNumber: number) {
     this.findAllAgents(pageNumber);
+  }
+
+  delete(id: number, name: string): void {
+    Swal.fire({
+      title: 'Bạn Có Muốn Xóa?',
+      text: 'Tên đại lí: ' + name + ' Không ?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#BBBBBB',
+      confirmButtonText: 'Có',
+      cancelButtonText: 'Không'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.agentService.delete(id).subscribe(() => {
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Xóa Thành Công ',
+            showConfirmButton: false,
+            timer: 2000
+          });
+          this.ngOnInit();
+        }, error => {
+          console.log(error);
+        });
+      }
+    });
   }
 
 }

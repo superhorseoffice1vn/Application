@@ -22,7 +22,6 @@ export class ListComponent implements OnInit {
   findAllForm(pageNumber: number) {
     this.employeeService.employeeList(pageNumber).subscribe(
       data => {
-        console.log( "dữ liệu : " ,data)
         this.employeeList = data;
       },
     );

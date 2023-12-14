@@ -50,10 +50,19 @@ export class LoginComponent implements OnInit {
           this.tokenService.setUserSession(data.user);
           this.tokenService.setRoleSession(data.roles);
         }
-
-        this.router.navigate(['/detail']).then(() => {
-          location.reload();
-        });
+        const roles = this.tokenService.getRole();
+        for (let i = 0; i < roles.length; i++) {
+          if (roles[i] === 'ROLE_ADMIN') {
+            this.router.navigate(['/agentsAdmin']).then(() => {
+              location.reload();
+            });
+          }
+          else if (roles.includes('ROLE_USER')) {
+            this.router.navigate(['/agentsEmployee']).then(() => {
+              location.reload();
+            });
+          }
+        }
 
       }
       this.toastr.success('Đăng nhập thành công');

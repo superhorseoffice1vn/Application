@@ -63,7 +63,7 @@ export class CreateComponent implements OnInit {
           if (JSON.stringify(data) == JSON.stringify(this.data)) {
             this.status = 'Thêm mới thành công';
             this.toast.success('Thêm mới thành công');
-            this.router.navigateByUrl('/createAgent');
+            this.router.navigateByUrl('/agentsEmployee');
             this.resetFormAndData();
           }
         }

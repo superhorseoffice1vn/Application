@@ -19,10 +19,6 @@
               <a class="btn btn-add btn-sm" routerLink="/createAgent" title="Thêm"><i class="fas fa-plus"></i>
                 Thêm đại lí</a>
             </div>
-
-            <div class="col-sm-2">
-              <a class="btn btn-excel btn-sm" href="" title="In"><i class="fas fa-file-excel"></i> Xuất Excel</a>
-            </div>
           </div>
           <form *ngIf="rfSearch" [formGroup]="rfSearch" (ngSubmit)="findAllAgents(0)">
             <div class="col-sm-8" style="margin-left: -15px;">
@@ -54,11 +50,11 @@
               <td>{{item.nameUser}}</td>
               <td>{{item.phoneNumber}}</td>
               <td>{{item.address}}</td>
-              <td style="text-align: center;"><a href="{{item.locationGoogleMap}}">
+              <td style="text-align: center;"><a href="{{item.locationGoogleMap}}" target="_blank">
                 <img src="https://play-lh.googleusercontent.com/Kf8WTct65hFJxBUDm5E-EpYsiDoLQiGGbnuyP6HBNax43YShXti9THPon1YKB6zPYpA" alt=""
                                                             style="width: 45px; height: 45px; border-radius: 50%; border: 1px solid #ccc; padding: 2px;"></a></td>
               <td  class="table-td-center">
-                <button class="btn btn-primary btn-sm trash" type="button" title="Xóa" onclick="myFunction(this)">
+                <button class="btn btn-primary btn-sm trash" type="button" title="Xóa" (click)="delete(item.id, item.nameAgent)">
                   <i class="fas fa-trash-alt"></i>
               </button>
                 <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp"

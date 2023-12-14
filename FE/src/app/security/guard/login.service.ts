@@ -23,7 +23,7 @@ export class LoginService implements CanActivate {
 
     if (this.tokenService.getToken()) {
       this.toastr.error('Bạn đã đăng nhập');
-      this.router.navigateByUrl('/sidebar');
+      this.router.navigateByUrl('/agentsEmployee');
     } else {
       return true;
     }

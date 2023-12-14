@@ -36,7 +36,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let item of employeeList.content ; let i = index">
+            <tr *ngFor="let item of employeeList?.content ; let i = index">
               <td width="10"><input type="checkbox" name="check1" value="1"></td>
               <td>{{item.name}}</td>
               <td>{{item.phoneNumber}}</td>
@@ -44,7 +44,7 @@
               <td class="table-td-center"><button class="btn btn-primary btn-sm trash" type="button" title="Xóa"
                                                   onclick="myFunction(this)"><i class="fas fa-trash-alt"></i>
               </button>
-                <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp"
+                <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp" [routerLink]="['/editEmployee/', item.id]"
                         data-toggle="modal" data-target="#ModalUP"><i class="fas fa-edit"></i>
                 </button>
               </td>

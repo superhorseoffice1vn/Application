@@ -28,4 +28,17 @@ export class EmployeeService {
   changePassword(obj: any): Observable<any> {
     return this.httpClient.post<any>(this.api_url + '/change-password',obj);
   }
+
+  updateEmployee(employee: any, id: any): Observable<any> {
+    const token = this.tokenService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.httpClient.put<any>(this.api_url + '/update/' + id, employee,{ headers });
+  }
+
+  employeeById(id: number | undefined): Observable<any> {
+    return this.httpClient.get<any>(this.api_url + "/" + id);
+  }
+
 }

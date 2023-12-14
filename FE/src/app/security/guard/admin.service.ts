@@ -35,7 +35,7 @@ export class AdminService implements CanActivate{
       }
 
       this.toastr.error('Bạn không có quyền truy cập vào trang này');
-      this.router.navigateByUrl('');
+      this.router.navigateByUrl('/detail');
 
     } else {
       this.toastr.error('Yêu cầu đăng nhập');

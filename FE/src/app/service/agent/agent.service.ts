@@ -36,4 +36,8 @@ export class AgentService {
   updateAgent(agent: any, id: string): Observable<any> {
     return this.httpClient.put<any>(this.api_url + '/update/' + id, agent);
   }
+
+  delete(id: number): Observable<any> {
+    return this.httpClient.delete<any>(this.api_url + '/delete/' + id);
+  }
 }

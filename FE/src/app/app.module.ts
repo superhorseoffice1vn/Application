@@ -16,6 +16,7 @@ import { CreateComponent } from './component/Agent/create/create.component';
 import { ListEmployeeComponent } from './component/Agent/list-employee/list-employee.component';
 import { ListAdminComponent } from './component/Agent/list-admin/list-admin.component';
 import { EditComponent } from './component/Agent/edit/edit.component';
+import { EditEmployeeComponent } from './component/employee/edit-employee/edit-employee.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { EditComponent } from './component/Agent/edit/edit.component';
     CreateComponent,
     ListEmployeeComponent,
     ListAdminComponent,
-    EditComponent
+    EditComponent,
+    EditEmployeeComponent
   ],
   imports: [
     BrowserModule,

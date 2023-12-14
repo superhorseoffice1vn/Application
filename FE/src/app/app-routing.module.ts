@@ -11,6 +11,7 @@ import {CreateComponent} from "./component/Agent/create/create.component";
 import {ListEmployeeComponent} from "./component/Agent/list-employee/list-employee.component";
 import {ListAdminComponent} from "./component/Agent/list-admin/list-admin.component";
 import {EditComponent} from "./component/Agent/edit/edit.component";
+import {EditEmployeeComponent} from "./component/employee/edit-employee/edit-employee.component";
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -20,8 +21,9 @@ const routes: Routes = [
   {path: 'sidebar', component: SidebarComponent},
   {path: 'createAgent', component: CreateComponent},
   {path: 'agentsEmployee', component: ListEmployeeComponent},
-  {path: 'agentsAdmin', component: ListAdminComponent},
+  {path: 'agentsAdmin', component: ListAdminComponent, canActivate: [AdminService]},
   {path: 'editAgent/:id', component: EditComponent},
+  {path: 'editEmployee/:id', component: EditEmployeeComponent},
 ];
 
 @NgModule({

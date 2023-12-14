@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AgentService} from "../../../service/agent/agent.service";
 import {UserService} from "../../../security/guard/user.service";
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
@@ -58,11 +58,11 @@ export class EditComponent implements OnInit {
       this.agentService.agentById(this.id).subscribe(agent => {
         this.agent = agent;
         this.formEditAgent = this.formBuilder.group({
-          nameAgent: [agent.nameAgent],
-          nameUser: [agent.nameUser],
-          phoneNumber: [agent.phoneNumber],
-          address: [agent.address],
-          locationGoogleMap: [agent.locationGoogleMap],
+          nameAgent: [agent.nameAgent, [Validators.required]],
+          nameUser: [agent.nameUser, [Validators.required]],
+          phoneNumber: [agent.phoneNumber, [Validators.required]],
+          address: [agent.address, [Validators.required]],
+          locationGoogleMap: [agent.locationGoogleMap, [Validators.required]],
         });
       }, error => {
         this.toast.error("Lỗi trang !")
