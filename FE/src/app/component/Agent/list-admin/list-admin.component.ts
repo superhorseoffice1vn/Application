@@ -17,6 +17,8 @@ export class ListAdminComponent implements OnInit {
   // @ts-ignore
   rfSearch: FormGroup;
 
+  sortOrder: 'ASC' | 'DESC' = 'ASC';
+
   constructor(
     private agentService: AgentService,
     private formBuilder: FormBuilder,
@@ -34,12 +36,24 @@ export class ListAdminComponent implements OnInit {
         this.pageAgent = data;
       }
     );
+    this.sortOrder = this.sortOrder === 'ASC' ? 'DESC' : 'ASC';
+
+    // Update the form with the sorting information
+    this.rfSearch.patchValue({
+      sortType: this.sortOrder
+    });
+  }
+
+  sortAgents() {
+    // Call the findAllAgents method to trigger sorting
+    this.findAllAgents(0);
   }
 
   // tslint:disable-next-line:typedef
   searchForm() {
     this.rfSearch = this.formBuilder.group({
-      nameEmployee: ['']
+      name: [''],
+      sortType:['']
     });
   }
 

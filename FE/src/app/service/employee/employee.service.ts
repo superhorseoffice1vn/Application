@@ -13,12 +13,13 @@ export class EmployeeService {
   constructor(private httpClient: HttpClient,
               private tokenService: TokenService) { }
 
-  employeeList(pageNumber: number): Observable<any> {
+  employeeList(search: any, pageNumber: number): Observable<any> {
     const token = this.tokenService.getToken();
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.httpClient.get<any>(this.api_url + '/list'+ '?page=' + pageNumber,{ headers });
+    return this.httpClient.post<any>(this.api_url + '/list' + '?page=' + pageNumber, search,{ headers });
+
   }
 
   detailUser(id: number | undefined): Observable<any> {

@@ -24,7 +24,7 @@
             <div class="col-sm-8" style="margin-left: -15px;">
               <div class="dataTables_filter" style="text-align: left;">
                 <label><strong>Tìm kiếm:</strong>
-                  <input formControlName="nameAgent" type="search" class="form-control form-control-sm" placeholder="Nhập tên đại lí" aria-controls="sampleTable" style="border-radius: 5px; border: 1px solid #ccc; padding: 24px;">
+                  <input formControlName="name" type="search" class="form-control form-control-sm" placeholder="Nhập tên đại lí" aria-controls="sampleTable" style="border-radius: 5px; border: 1px solid #ccc; padding: 24px;">
                 </label>
               </div>
             </div>
@@ -35,7 +35,9 @@
             <thead>
             <tr>
               <th width="10"><input type="checkbox" id="all"></th>
-              <th width="150">Tên đại lí</th>
+              <th width="150" (click)="sortAgents()" >Tên đại lí
+                <i class="fas fa-sort"></i>
+              </th>
               <th>Họ và tên người liên lạc</th>
               <th>Số điện thoại liên lạc</th>
               <th>Địa chỉ</th>

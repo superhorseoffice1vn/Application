@@ -20,6 +20,8 @@ export class ListEmployeeComponent implements OnInit {
   // @ts-ignore
   currentUser: User;
 
+  sortOrder: 'ASC' | 'DESC' = 'ASC';
+
   constructor(
     private agentService: AgentService,
     private formBuilder: FormBuilder,
@@ -38,6 +40,12 @@ export class ListEmployeeComponent implements OnInit {
         this.pageAgent = data;
       }
     );
+    this.sortOrder = this.sortOrder === 'ASC' ? 'DESC' : 'ASC';
+
+    // Update the form with the sorting information
+    this.rfSearch.patchValue({
+      sortType: this.sortOrder
+    });
   }
 
   // tslint:disable-next-line:typedef
@@ -45,8 +53,15 @@ export class ListEmployeeComponent implements OnInit {
     this.currentUser = JSON.parse(this.tokenService.getUser());
     this.rfSearch = this.formBuilder.group({
       id:[this.currentUser.id],
-      nameAgent: ['']
+      name: [''],
+      sortType:['']
     });
+    console.log(this.rfSearch)
+  }
+
+  sortAgents() {
+    // Call the findAllAgents method to trigger sorting
+    this.findAllAgents(0);
   }
 
   // tslint:disable-next-line:typedef

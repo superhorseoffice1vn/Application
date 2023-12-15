@@ -62,7 +62,7 @@ export class SignupComponent implements OnInit {
           if (JSON.stringify(data) == JSON.stringify(this.data)) {
             this.status = 'Đăng ký thành công';
             this.toast.success('Đăng ký thành công');
-            this.router.navigateByUrl('/signup');
+            this.router.navigateByUrl('/listEmployee');
             this.resetFormAndData();
           }
         }
