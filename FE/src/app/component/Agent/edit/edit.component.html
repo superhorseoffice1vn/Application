@@ -56,6 +56,13 @@
                 Vị trí google map không được để trống.
               </div>
             </div>
+            <div class="form-group col-md-6" *ngIf="checkLogin && accountRole == 'ROLE_ADMIN'">
+              <label class="control-label">Họ và tên nhân viên</label>
+              <select class="form-control" id="exampleSelect1" formControlName="idUser" (change)="onEmployeeChange($event)">
+                <option *ngFor="let employee of employees" [value]="employee.id">{{ employee.name }}</option>
+              </select>
+            </div>
+
             <div class="form-group col-md-6" style="display: flex; align-items: flex-end;">
               <button class="btn btn-save" type="submit" [disabled]="(!formEditAgent.valid)">Lưu lại</button>
               <a class="btn btn-cancel" [routerLink]="accountRole === 'ROLE_ADMIN' ? '/agentsAdmin' : '/agentsEmployee'">Hủy bỏ</a>

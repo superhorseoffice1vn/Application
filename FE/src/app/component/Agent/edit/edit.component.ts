@@ -7,6 +7,8 @@ import {ToastrService} from "ngx-toastr";
 import {Agent} from "../../../model/agent/agent";
 import {TokenService} from "../../../service/security/token.service";
 import {User} from "../../../model/user/user";
+import {EmployeeService} from "../../../service/employee/employee.service";
+import {Employees} from "../../../dto/employee/employees";
 
 @Component({
   selector: 'app-edit',
@@ -22,12 +24,17 @@ export class EditComponent implements OnInit {
   // @ts-ignore
   formEditAgent: FormGroup;
 
+  // @ts-ignore
+  employees: Employees[];
+
   checkLogin = false;
   nameAccount: any;
   // @ts-ignore
   currentUser: User;
   // @ts-ignore
   accountRole: string;
+
+
   constructor(
     private formBuilder: FormBuilder,
     private agentService: AgentService,
@@ -35,7 +42,8 @@ export class EditComponent implements OnInit {
     private userService: UserService,
     private activatedRoute: ActivatedRoute,
     private toast: ToastrService,
-    private router: Router
+    private router: Router,
+    private employeeService : EmployeeService,
   ) { }
 
   ngOnInit(): void {
@@ -46,8 +54,10 @@ export class EditComponent implements OnInit {
       phoneNumber: [''],
       address: [''],
       locationGoogleMap: [''],
+      idUser:[]
     });
     this.getFormEdit();
+    this.findAllEmployees();
   }
 
 
@@ -63,6 +73,7 @@ export class EditComponent implements OnInit {
           phoneNumber: [agent.phoneNumber, [Validators.required]],
           address: [agent.address, [Validators.required]],
           locationGoogleMap: [agent.locationGoogleMap, [Validators.required]],
+          idUser: [agent.user.id]
         });
       }, error => {
         this.toast.error("Lỗi trang !")
@@ -83,6 +94,18 @@ export class EditComponent implements OnInit {
         }
       );
   }
+  onEmployeeChange(event: any) {
+    this.formEditAgent.controls['idUser'].setValue(event.target.value);
+  }
+
+  findAllEmployees(){
+    this.employeeService.ListEmployee().subscribe(
+      data => {
+        this.employees = data;
+      }
+    )
+  }
+
 
   checkRole(){
     if (this.tokenService.isLogged()) {

@@ -23,6 +23,7 @@
     "@popperjs/core": "^2.10.2",
     "bootstrap": "^5.2.0",
     "ngx-toastr": "^15.2.2",
+    "primeng": "^17.1.0",
     "rxjs": "~7.5.0",
     "sweetalert2": "^11.10.1",
     "tslib": "^2.3.0",
