@@ -40,4 +40,16 @@ export class AgentService {
   delete(id: number): Observable<any> {
     return this.httpClient.delete<any>(this.api_url + '/delete/' + id);
   }
+  updateEmployees(id: number, idList: number[]): Observable<any> {
+    const requestBody = {
+      id: id,
+      idList: idList
+    };
+    return this.httpClient.put<any>(this.api_url + '/updateEmployeeId', requestBody);
+  }
+
+  getAll(): Observable<any> {
+    return this.httpClient.get<any>(this.api_url + "/allAgent");
+  }
+
 }

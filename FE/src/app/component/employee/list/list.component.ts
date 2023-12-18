@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {PageForm} from "../../../model/user/PageList";
 import {EmployeeService} from "../../../service/employee/employee.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
+import * as XLSX from "xlsx";
+import {EmployeeDto} from "../../../dto/employee/employeeDto";
 
 @Component({
   selector: 'app-list',
@@ -14,9 +16,19 @@ export class ListComponent implements OnInit {
   employeeList: PageForm;
 
   // @ts-ignore
+  employees: EmployeeDto;
+
+  // @ts-ignore
   rfSearch: FormGroup;
 
+  // @ts-ignore
+  sortType: string;
+
+  // @ts-ignore
+  checkedAll: boolean = false;
+
   sortOrder: 'ASC' | 'DESC' = 'ASC';
+
 
   constructor(private employeeService: EmployeeService,
               private formBuilder: FormBuilder,) { }
@@ -24,6 +36,7 @@ export class ListComponent implements OnInit {
   ngOnInit(): void {
     this.searchForm();
     this.findAllForm(0)
+    this.allEmployee();
   }
 
   // tslint:disable-next-line:typedef
@@ -33,17 +46,23 @@ export class ListComponent implements OnInit {
         this.employeeList = data;
       },
     );
-    this.sortOrder = this.sortOrder === 'ASC' ? 'DESC' : 'ASC';
+  }
 
-    // Update the form with the sorting information
-    this.rfSearch.patchValue({
-      sortType: this.sortOrder
-    });
+  allEmployee(){
+    this.employeeService.employees().subscribe(
+      employee =>{
+        this.employees = employee;
+      }
+    )
   }
 
   sortAgents() {
-    // Call the findAllAgents method to trigger sorting
-    this.findAllForm(0);
+    this.sortOrder = this.sortOrder === 'ASC' ? 'DESC' : 'ASC';
+    this.rfSearch.patchValue({
+      sortType: this.sortOrder
+    });
+    // @ts-ignore
+    this.findAllForm(0, this.sortOrder);
   }
 
   // tslint:disable-next-line:typedef
@@ -59,4 +78,65 @@ export class ListComponent implements OnInit {
     this.findAllForm(pageNumber);
   }
 
+  exportToExcel(): void {
+
+    const fieldMappings = [
+      { fieldName: 'name', excelName: 'Họ và Tên' },
+      { fieldName: 'phoneNumber', excelName: 'Số Điện Thoại' },
+      { fieldName: 'username', excelName: 'Tài khoản' },
+    ];
+
+    const exportedData = this.employeeList.content.map(item => {
+      const mappedItem: any = {};
+      fieldMappings.forEach(mapping => {
+        // @ts-ignore
+        mappedItem[mapping.excelName] = item[mapping.fieldName];
+      });
+      return mappedItem;
+    });
+    /* Tạo worksheet */
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportedData);
+
+    /* Tạo workbook và thêm worksheet vào workbook */
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Danh sách nhân viên');
+
+    /* Lưu vào file */
+    XLSX.writeFile(wb, 'du-lieu-xuat-excel.xlsx');
+  }
+
+  exportToExcelAll(): void {
+
+    const fieldMappings = [
+      {fieldName: 'name', excelName: 'Họ và Tên'},
+      {fieldName: 'phoneNumber', excelName: 'Số Điện Thoại'},
+      {fieldName: 'username', excelName: 'Tài khoản'},
+    ];
+
+    if (Array.isArray(this.employees)) {
+      const exportedData = this.employees.map((item: EmployeeDto) => {
+        const mappedItem: any = {};
+        fieldMappings.forEach(mapping => {
+          // @ts-ignore
+          mappedItem[mapping.excelName] = item[mapping.fieldName];
+        });
+        return mappedItem;
+      });
+      /* Tạo worksheet */
+      const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportedData);
+
+      /* Tạo workbook và thêm worksheet vào workbook */
+      const wb: XLSX.WorkBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Danh sách nhân viên');
+
+      /* Lưu vào file */
+      XLSX.writeFile(wb, 'du-lieu-xuat-excel.xlsx');
+    }
+  }
+
+  toggleAllCheckboxes() {
+    this.employeeList.content.forEach((item: any) => {
+      item.isChecked = this.checkedAll;
+    });
+  }
 }

@@ -42,4 +42,11 @@ export class EmployeeService {
     return this.httpClient.get<any>(this.api_url + "/" + id);
   }
 
+  employees(): Observable<any>{
+    return this.httpClient.get<any>(this.api_url + "/allEmployee")
+  }
+
+  ListEmployee(): Observable<any>{
+    return this.httpClient.get<any>(this.api_url + "/employees")
+  }
 }

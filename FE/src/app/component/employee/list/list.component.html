@@ -21,7 +21,10 @@
             </div>
 
             <div class="col-sm-2">
-              <a class="btn btn-excel btn-sm" href="" title="In"><i class="fas fa-file-excel"></i> Xuất Excel</a>
+              <a class="btn btn-excel btn-sm" (click)="exportToExcel()" title="In"><i class="fas fa-file-excel"></i> Xuất Excel</a>
+            </div>
+            <div class="col-sm-2">
+              <a class="btn btn-excel btn-sm" (click)="exportToExcelAll()" title="In"><i class="fas fa-file-excel"></i> Xuất Excel All</a>
             </div>
           </div>
           <form *ngIf="rfSearch" [formGroup]="rfSearch" (ngSubmit)="findAllForm(0)">
@@ -33,11 +36,11 @@
               </div>
             </div>
           </form>
-          <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
+          <table class="table table-hover table-bordered js-copytextarea " cellpadding="0" cellspacing="0" border="0"
                  id="sampleTable">
             <thead>
             <tr>
-              <th width="10"><input type="checkbox" id="all"></th>
+              <th width="10"><input type="checkbox" id="all" [(ngModel)]="checkedAll" (change)="toggleAllCheckboxes()"></th>
               <th width="150" (click)="sortAgents()" >Họ và tên
                 <i class="fas fa-sort"></i>
               </th>
@@ -48,7 +51,7 @@
             </thead>
             <tbody>
             <tr *ngFor="let item of employeeList?.content ; let i = index">
-              <td width="10"><input type="checkbox" name="check1" value="1"></td>
+              <td width="10"><input type="checkbox" name="check1" value="1" [checked]="checkedAll"></td>
               <td>{{item.name}}</td>
               <td>{{item.phoneNumber}}</td>
               <td>{{item.username}}</td>
@@ -100,3 +103,4 @@
     </div>
   </div>
 </main>
+

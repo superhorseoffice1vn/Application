@@ -26,4 +26,13 @@
   margin-left: -250px; /* Kích thước của sidebar khi thu vô */
 }
 
+.app-sidebar__toggle:before {
+  color: yellow !important;
+}
+
+.app-nav__item.ng-tns-c53-0:hover {
+  background-color: #f1f12d;
+  color: #333;
+}
+
 

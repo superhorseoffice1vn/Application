@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
 // @ts-ignore
   rfLogin: FormGroup;
   passwordVisible: boolean = false;
+  eyeIcon: string = 'bx bx-hide';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -82,6 +83,7 @@ export class LoginComponent implements OnInit {
 
   togglePasswordVisibility(): void {
     this.passwordVisible = !this.passwordVisible;
+    this.eyeIcon = this.passwordVisible ? 'bx bx-show' : 'bx bx-hide';
   }
 
 }

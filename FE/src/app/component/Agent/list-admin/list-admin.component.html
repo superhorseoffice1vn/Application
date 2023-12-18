@@ -1,4 +1,3 @@
-
 <app-sidebar></app-sidebar>
 <main class="app-content">
   <div class="app-title" style="margin-top: 40px">
@@ -15,24 +14,57 @@
 
           <div class="row element-button">
             <div class="col-sm-2">
-              <a class="btn btn-excel btn-sm" href="" title="In"><i class="fas fa-file-excel"></i> Xuất Excel</a>
+              <a class="btn btn-excel btn-sm" (click)="exportToExcel()" title="In"><i class="fas fa-file-excel"></i> Xuất Excel</a>
             </div>
           </div>
-          <form *ngIf="rfSearch" [formGroup]="rfSearch" (ngSubmit)="findAllAgents(0)">
-            <div class="col-sm-8" style="margin-left: -15px;">
-              <div class="dataTables_filter" style="text-align: left;">
-                <label><strong>Tìm kiếm:</strong>
-                  <input formControlName="name" type="search" class="form-control form-control-sm " placeholder="Nội dung tìm kiếm" aria-controls="sampleTable" style="border-radius: 5px; border: 1px solid #ccc; padding: 24px;">
-                </label>
-              </div>
-            </div>
-          </form>
 
+          <div class="row element-button ">
+            <div class="col-md-8"> <!-- Chia thành 8 phần cho ô tìm kiếm -->
+              <form *ngIf="rfSearch" [formGroup]="rfSearch" (ngSubmit)="findAllAgents(0)">
+                <div class="dataTables_filter" style="text-align: left;">
+                  <label><strong>Tìm kiếm:</strong>
+                    <input formControlName="name" type="search" class="form-control form-control-sm " placeholder="Nội dung tìm kiếm" aria-controls="sampleTable" style="border-radius: 5px; border: 1px solid #ccc; padding: 24px;">
+                  </label>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade"  id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel" style="color: black">Cập nhật</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="form-group  col-md-6">
+                          <label for="exampleSelect1" class="control-label">Họ vàn tên nhân viên</label>
+                          <select class="form-control" id="exampleSelect1" formControlName="employeeId" (change)="onEmployeeSelected($event)">
+                            <option *ngFor="let employee of employees" [value]="employee.id">{{ employee.name }}</option>
+                          </select>
+                        </div>
+
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ bỏ</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close" (click)="updateEmployees()">Cập nhật</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="col-md-4 custom-btn-col"> <!-- Chia thành 4 phần cho ô button cập nhật nhân viên -->
+              <button type="button" class="btn btn-primary custom-btn" data-toggle="modal" data-target="#exampleModal">
+                Cập nhật nhân viên
+              </button>
+            </div>
+          </div>
           <table class="table table-hover table-bordered js-copytextarea" cellpadding="0" cellspacing="0" border="0"
                  id="sampleTable" *ngIf="pageAgent != null" >
             <thead>
             <tr>
-              <th width="10"><input type="checkbox" id="all"></th>
+              <th width="10"><input type="checkbox" id="all" [checked]="checkedAll" (click)="toggleAllCheckboxes()"></th>
               <th width="150" (click)="sortAgents()" >Tên đại lí
                 <i class="fas fa-sort"></i>
               </th>
@@ -46,7 +78,7 @@
             </thead>
             <tbody>
             <tr *ngFor="let item of pageAgent.content ; let i = index">
-              <td width="10"><input type="checkbox" name="check1" value="1"></td>
+              <td width="10"><input type="checkbox" name="check1" value="1" [checked]="checkedAll" (click)="addToUpdate(item.id) "></td>
               <td>{{item.nameAgent}}</td>
               <td>{{item.nameUser}}</td>
               <td>{{item.phoneNumber}}</td>
@@ -111,3 +143,5 @@
     </div>
   </div>
 </main>
+
+

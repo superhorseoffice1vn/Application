@@ -17,6 +17,7 @@ import { ListEmployeeComponent } from './component/Agent/list-employee/list-empl
 import { ListAdminComponent } from './component/Agent/list-admin/list-admin.component';
 import { EditComponent } from './component/Agent/edit/edit.component';
 import { EditEmployeeComponent } from './component/employee/edit-employee/edit-employee.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { EditEmployeeComponent } from './component/employee/edit-employee/edit-e
     FormsModule,
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(),
+    NgbModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

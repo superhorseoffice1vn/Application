@@ -40,12 +40,6 @@ export class ListEmployeeComponent implements OnInit {
         this.pageAgent = data;
       }
     );
-    this.sortOrder = this.sortOrder === 'ASC' ? 'DESC' : 'ASC';
-
-    // Update the form with the sorting information
-    this.rfSearch.patchValue({
-      sortType: this.sortOrder
-    });
   }
 
   // tslint:disable-next-line:typedef
@@ -56,12 +50,15 @@ export class ListEmployeeComponent implements OnInit {
       name: [''],
       sortType:['']
     });
-    console.log(this.rfSearch)
   }
 
   sortAgents() {
-    // Call the findAllAgents method to trigger sorting
-    this.findAllAgents(0);
+    this.sortOrder = this.sortOrder === 'ASC' ? 'DESC' : 'ASC';
+    this.rfSearch.patchValue({
+      sortType: this.sortOrder
+    });
+    // @ts-ignore
+    this.findAllAgents(0, this.sortOrder);
   }
 
   // tslint:disable-next-line:typedef
