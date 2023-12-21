@@ -5,6 +5,7 @@ import {ToastrService} from "ngx-toastr";
 import {Router} from "@angular/router";
 import {TokenService} from "../../../service/security/token.service";
 import {User} from "../../../model/user/user";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-create',
@@ -30,8 +31,9 @@ export class CreateComponent implements OnInit {
     private tokenService: TokenService,
     private builder: FormBuilder,
     private toast: ToastrService,
-    private router: Router
-  ) {
+    private router: Router,
+    private _titleService: Title) {
+    this._titleService.setTitle("Thêm mới đại lí")
   }
 
   ngOnInit(): void {

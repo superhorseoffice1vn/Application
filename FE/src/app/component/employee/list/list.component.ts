@@ -4,6 +4,8 @@ import {EmployeeService} from "../../../service/employee/employee.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import * as XLSX from "xlsx";
 import {EmployeeDto} from "../../../dto/employee/employeeDto";
+import {TokenService} from "../../../service/security/token.service";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-list',
@@ -31,7 +33,10 @@ export class ListComponent implements OnInit {
 
 
   constructor(private employeeService: EmployeeService,
-              private formBuilder: FormBuilder,) { }
+              private formBuilder: FormBuilder,
+              private _titleService: Title) {
+    this._titleService.setTitle("Quản lý nhân viên")
+  }
 
   ngOnInit(): void {
     this.searchForm();

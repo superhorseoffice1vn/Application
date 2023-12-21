@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 import {AuthService} from "../../service/security/auth.service";
 import {TokenService} from "../../service/security/token.service";
 import {MessageRespone} from "../../model/security/message-respone";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-login',
@@ -22,9 +23,10 @@ export class LoginComponent implements OnInit {
     private toastr: ToastrService,
     private router: Router,
     private authService: AuthService,
-    private tokenService: TokenService
-  ) {
-  }
+    private tokenService: TokenService,
+    private _titleService: Title) {
+    this._titleService.setTitle("Đăng nhập")
+}
 
   ngOnInit(): void {
     this.getFormLogin();

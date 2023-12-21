@@ -10,6 +10,8 @@ import {Employees} from "../../../dto/employee/employees";
 import {Agent} from "../../../model/agent/agent";
 import {EmployeeDto} from "../../../dto/employee/employeeDto";
 import {AgentsAdmin} from "../../../dto/agent/agentsAdmin";
+import {TokenService} from "../../../service/security/token.service";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-list-admin',
@@ -46,7 +48,9 @@ export class ListAdminComponent implements OnInit {
     private formBuilder: FormBuilder,
     private toast: ToastrService,
     private employeeService : EmployeeService,
-  ) { }
+    private _titleService: Title) {
+    this._titleService.setTitle("Quản lý đại lí")
+  }
 
   ngOnInit(): void {
     this.searchForm();

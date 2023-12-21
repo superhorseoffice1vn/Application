@@ -9,6 +9,7 @@ import {TokenService} from "../../../service/security/token.service";
 import {User} from "../../../model/user/user";
 import {EmployeeService} from "../../../service/employee/employee.service";
 import {Employees} from "../../../dto/employee/employees";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-edit',
@@ -45,7 +46,9 @@ export class EditComponent implements OnInit {
     private toast: ToastrService,
     private router: Router,
     private employeeService : EmployeeService,
-  ) { }
+    private _titleService: Title) {
+    this._titleService.setTitle("Chỉnh sửa đại lí")
+  }
 
   ngOnInit(): void {
     this.checkRole();

@@ -26,8 +26,8 @@ export class DetailComponent implements OnInit {
     private employeeService: EmployeeService,
     private tokenService: TokenService,
     private formBuilder: FormBuilder,
-    private titleService: Title
-  ) {
+    private _titleService: Title) {
+    this._titleService.setTitle("Thông tin cá nhân")
   }
 
   ngOnInit(): void {

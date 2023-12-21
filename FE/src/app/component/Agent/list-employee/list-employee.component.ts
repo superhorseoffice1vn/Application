@@ -5,6 +5,7 @@ import {AgentService} from "../../../service/agent/agent.service";
 import {TokenService} from "../../../service/security/token.service";
 import {User} from "../../../model/user/user";
 import Swal from "sweetalert2";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-list-employee',
@@ -26,7 +27,9 @@ export class ListEmployeeComponent implements OnInit {
     private agentService: AgentService,
     private formBuilder: FormBuilder,
     private tokenService: TokenService,
-  ) { }
+    private _titleService: Title) {
+    this._titleService.setTitle("Quản lý đại lí")
+  }
 
   ngOnInit(): void {
     this.searchForm();

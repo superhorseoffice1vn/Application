@@ -9,6 +9,7 @@ import {User} from "../../../model/user/user";
 import {EmployeeService} from "../../../service/employee/employee.service";
 import {Account} from "../../../model/user/account";
 import {UpdateEmployee} from "../../../model/user/updateEmployee";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-edit-employee',
@@ -35,7 +36,9 @@ export class EditEmployeeComponent implements OnInit {
               private employeeService: EmployeeService,
               private activatedRoute: ActivatedRoute,
               private toast: ToastrService,
-              private router: Router) {
+              private router: Router,
+              private _titleService: Title) {
+    this._titleService.setTitle("Chỉnh sửa nhân viên")
   }
 
   ngOnInit(): void {
