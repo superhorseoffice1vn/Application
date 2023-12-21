@@ -5,3 +5,10 @@
 .fa-edit:before{
   color: #d0881f;
 }
+input[type="text" i]:focus{
+  border: 1px solid #dadada !important;
+}
+
+input[type="search" i]:focus{
+  border: 1px solid #dadada !important;
+}

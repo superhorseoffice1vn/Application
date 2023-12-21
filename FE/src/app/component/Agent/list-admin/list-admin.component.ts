@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {AgentService} from "../../../service/agent/agent.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {PageAgentAdmin} from "../../../model/agent/pageAgentAdmin";
@@ -9,6 +8,8 @@ import {ToastrService} from "ngx-toastr";
 import {EmployeeService} from "../../../service/employee/employee.service";
 import {Employees} from "../../../dto/employee/employees";
 import {Agent} from "../../../model/agent/agent";
+import {EmployeeDto} from "../../../dto/employee/employeeDto";
+import {AgentsAdmin} from "../../../dto/agent/agentsAdmin";
 
 @Component({
   selector: 'app-list-admin',
@@ -22,6 +23,10 @@ export class ListAdminComponent implements OnInit {
   // @ts-ignore
   pageAgent: PageAgentAdmin;
   // @ts-ignore
+  pageAgentRestore: PageAgentAdmin;
+  // @ts-ignore
+  listAgent: AgentsAdmin[]
+  // @ts-ignore
   rfSearch: FormGroup;
   // @ts-ignore
   employees: Employees[];
@@ -31,7 +36,7 @@ export class ListAdminComponent implements OnInit {
   sortOrder: 'ASC' | 'DESC' = 'ASC';
 
   // @ts-ignore
-  updateIds: number[];
+  updateIds: number[] = [];
 
   // @ts-ignore
   checkedAll: boolean;
@@ -46,6 +51,7 @@ export class ListAdminComponent implements OnInit {
   ngOnInit(): void {
     this.searchForm();
     this.findAllAgents(0);
+    this.listAdminRestore(0);
     this.updateIds = [];
     this.findAllEmployees();
     this.getAll();
@@ -58,6 +64,22 @@ export class ListAdminComponent implements OnInit {
         this.pageAgent = data;
       }
     );
+  }
+
+  listAdminRestore(pageNumber: number){
+    this.agentService.listAdminRestore(this.rfSearch.value,pageNumber).subscribe(
+      data => {
+        this.pageAgentRestore = data;
+      }
+    )
+  }
+
+  listAgentSelect(){
+    this.agentService.listAgent(this.updateIds).subscribe(
+      data => {
+        this.listAgent = data;
+      }
+    )
   }
 
 
@@ -92,49 +114,58 @@ export class ListAdminComponent implements OnInit {
     this.findAllAgents(pageNumber);
   }
 
-  delete(id: number, name: string): void {
-    Swal.fire({
-      title: 'Bạn Có Muốn Xóa?',
-      text: 'Tên đại lí: ' + name + ' Không ?',
-      icon: 'question',
-      showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#BBBBBB',
-      confirmButtonText: 'Có',
-      cancelButtonText: 'Không'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.agentService.delete(id).subscribe(() => {
-          Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'Xóa Thành Công ',
-            showConfirmButton: false,
-            timer: 2000
+  exportToExcelAll(): void {
+
+    const fieldMappings = [
+      { fieldName: 'nameAgent', excelName: 'Tên đại lý' },
+      { fieldName: 'nameUser', excelName: 'Họ và tên người liên lạc' },
+      { fieldName: 'phoneNumber', excelName: 'Số điện thoại' },
+      { fieldName: 'address', excelName: 'Địa chỉ' },
+      { fieldName: 'user.name', excelName: 'Họ và tên nhân viên' },
+    ];
+
+    if (Array.isArray(this.agentAll)) {
+      const exportedData = this.agentAll.map((item: EmployeeDto) => {
+        const mappedItem: any = {};
+        fieldMappings.forEach(mapping => {
+          const fields = mapping.fieldName.split('.');
+          let value = item;
+          fields.forEach(field => {
+            if (value && value.hasOwnProperty(field)) {
+              // @ts-ignore
+              value = value[field];
+            } else {
+              // @ts-ignore
+              value = null;
+            }
           });
-          this.ngOnInit();
-        }, error => {
-          console.log(error);
+          mappedItem[mapping.excelName] = value;
         });
-      }
-    });
-  }
+        return mappedItem;
+      });
+      const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportedData);
 
-  exportToExcel(): void {
-    /* Tạo worksheet */
-    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.pageAgent.content);
+      const wb: XLSX.WorkBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Danh sách đại lý');
 
-    /* Tạo workbook và thêm worksheet vào workbook */
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-
-    /* Lưu vào file */
-    XLSX.writeFile(wb, 'du-lieu-xuat-excel.xlsx');
+      XLSX.writeFile(wb, 'danh-sach-dai-li-excel.xlsx');
+    }
   }
 
   addToUpdate(id: number) {
-    const index = this.updateIds.indexOf(id, 0);
-    index > -1 ? this.updateIds.splice(index, 1) : this.updateIds.push(id);
+    const index = this.updateIds.indexOf(id);
+
+    if (index > -1) {
+      this.updateIds.splice(index, 1);
+    } else {
+      this.updateIds.push(id);
+    }
+
+    if (this.updateIds.length > 0) {
+      this.listAgentSelect();
+    } else {
+      this.listAgent = [];
+    }
   }
 
   getAll(){
@@ -143,15 +174,6 @@ export class ListAdminComponent implements OnInit {
         this.agentAll = data;
       }
     )
-  }
-
-  toggleAllCheckboxes() {
-    this.checkedAll = !this.checkedAll;
-
-    this.agentAll.forEach((item: any) => {
-      this.addToUpdate(item.id);
-    });
-
   }
 
   updateEmployees() {
@@ -175,6 +197,35 @@ export class ListAdminComponent implements OnInit {
     } else {
       this.toast.warning('Vui lòng chọn ít nhất một đại lý để cập nhật.');
     }
+  }
+
+  remove(updateIds: number[]): void {
+    Swal.fire({
+      title: 'Bạn Có Muốn Xóa?',
+      text: 'Các đại lí đã chọn ?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#BBBBBB',
+      confirmButtonText: 'Có',
+      cancelButtonText: 'Không'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.agentService.remove(updateIds).subscribe(() => {
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Xóa Thành Công ',
+            showConfirmButton: false,
+            timer: 2000
+          });
+          this.listAgent = [];
+          this.ngOnInit();
+        }, error => {
+          this.toast.warning('Vui lòng chọn nhân viên để xoá.');
+        });
+      }
+    });
   }
 
   onEmployeeSelected(event: any) {

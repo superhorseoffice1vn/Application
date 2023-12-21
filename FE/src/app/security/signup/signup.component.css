@@ -5,3 +5,6 @@
 .btn-cancel:hover{
   background-color:#ffc5c5;
 }
+input[type="text" i]:focus{
+  border: 1px solid #dadada !important;
+}

@@ -49,7 +49,24 @@ export class AgentService {
   }
 
   getAll(): Observable<any> {
-    return this.httpClient.get<any>(this.api_url + "/allAgent");
+    const token = this.tokenService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.httpClient.get<any>(this.api_url + "/allAgent",{ headers });
   }
 
+  remove(deleteIds: number[]): Observable<any> {
+    return this.httpClient.post<any>(this.api_url + "/remove", deleteIds);
+  }
+
+  listAdminRestore(search: any, pageNumber: number): Observable<any> {
+    return this.httpClient.post<any>(this.api_url + '/listAdminRestore' + '?page=' + pageNumber, search);
+  }
+
+  listAgent(idList: number[]): Observable<any> {
+    return this.httpClient.post<any>(this.api_url + "/listAgent", idList ,{
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    });
+  }
 }

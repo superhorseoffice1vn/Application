@@ -14,32 +14,87 @@
 
           <div class="row element-button">
             <div class="col-sm-2">
-              <a class="btn btn-excel btn-sm" (click)="exportToExcel()" title="In"><i class="fas fa-file-excel"></i> Xuất Excel</a>
+              <a class="btn btn-excel btn-sm" (click)="exportToExcelAll()" title="In"><i class="fas fa-file-excel"></i> Xuất Excel</a>
+            </div>
+            <div class="col-sm-2">
+
+              <a class="btn btn-warning btn-sm" routerLink="/signup" title="Thêm"><i class="fas fa-remove"></i>
+                Danh sách đã xoá</a>
             </div>
           </div>
 
           <div class="row element-button ">
-            <div class="col-md-8"> <!-- Chia thành 8 phần cho ô tìm kiếm -->
+            <div class="col-md-8 ">
               <form *ngIf="rfSearch" [formGroup]="rfSearch" (ngSubmit)="findAllAgents(0)">
                 <div class="dataTables_filter" style="text-align: left;">
                   <label><strong>Tìm kiếm:</strong>
                     <input formControlName="name" type="search" class="form-control form-control-sm " placeholder="Nội dung tìm kiếm" aria-controls="sampleTable" style="border-radius: 5px; border: 1px solid #ccc; padding: 24px;">
                   </label>
                 </div>
-                <!-- Modal -->
+                <div>
+                  <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel1" style="color: black">Danh sách đã xoá</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
+                            <span aria-hidden="true" style="color: red">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <table class="table table-bordered" *ngIf="listAgent != null">
+                            <thead>
+                            <tr>
+                              <th width="150"  >Tên đại lí</th>
+                              <th>Họ và tên người liên lạc</th>
+                              <th>Số điện thoại liên lạc</th>
+                              <th>Địa chỉ</th>
+                              <th>Vị trí google map</th>
+                              <th>Họ và tên nhân viên</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let item of listAgent ; let i = index">
+                              <td>{{item.nameAgent}}</td>
+                              <td>{{item.nameUser}}</td>
+                              <td>{{item.phoneNumber}}</td>
+                              <td>{{item.address}}</td>
+                              <td style="text-align: center;"><a href="{{item.locationGoogleMap}}" target="_blank">
+                                <img src="https://play-lh.googleusercontent.com/Kf8WTct65hFJxBUDm5E-EpYsiDoLQiGGbnuyP6HBNax43YShXti9THPon1YKB6zPYpA" alt=""
+                                     style="width: 45px; height: 45px; border-radius: 50%; border: 1px solid #ccc; padding: 2px;"></a></td>
+                              <td>{{item.nameEmployee}}</td>
+                            </tr>
+                            </tbody>
+                          </table>
+
+                          <div align="center" *ngIf="listAgent == null">
+                            <img src="https://i.pinimg.com/originals/49/e5/8d/49e58d5922019b8ec4642a2e2b9291c2.png" style="width: 350px; height: 350px;" alt="">
+                            <h5>Không Tìm Thấy Dữ Liệu</h5>
+                          </div>
+
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ bỏ</button>
+                          <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close" (click)="remove(this.updateIds)">Xoá</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <div class="modal fade"  id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel" style="color: black">Cập nhật</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
-                          <span aria-hidden="true">&times;</span>
+                          <span aria-hidden="true" style="color: red">&times;</span>
                         </button>
                       </div>
                       <div class="modal-body">
-                        <div class="form-group  col-md-6">
-                          <label for="exampleSelect1" class="control-label">Họ vàn tên nhân viên</label>
-                          <select class="form-control" id="exampleSelect1" formControlName="employeeId" (change)="onEmployeeSelected($event)">
+                        <div class="form-group ">
+                          <label for="exampleSelect1" class="control-label">Họ và tên nhân viên</label>
+                          <select class="form-control" id="exampleSelect1" (change)="onEmployeeSelected($event)">
+                            <option value="" disabled selected > ----Chọn nhân viên mới thay thế------</option>
                             <option *ngFor="let employee of employees" [value]="employee.id">{{ employee.name }}</option>
                           </select>
                         </div>
@@ -51,11 +106,15 @@
                       </div>
                     </div>
                   </div>
+
                 </div>
               </form>
             </div>
-            <div class="col-md-4 custom-btn-col"> <!-- Chia thành 4 phần cho ô button cập nhật nhân viên -->
-              <button type="button" class="btn btn-primary custom-btn" data-toggle="modal" data-target="#exampleModal">
+            <div class="col-md-4 d-flex flex-column-reverse align-items-end">
+              <button type="button" class="btn btn-danger" data-toggle="modal" data-target=".bd-example-modal-lg">
+                Xoá
+              </button>
+              <button type="button" class="btn btn-info " data-toggle="modal" data-target="#exampleModal">
                 Cập nhật nhân viên
               </button>
             </div>
@@ -64,7 +123,7 @@
                  id="sampleTable" *ngIf="pageAgent != null" >
             <thead>
             <tr>
-              <th width="10"><input type="checkbox" id="all" [checked]="checkedAll" (click)="toggleAllCheckboxes()"></th>
+              <th width="10">#</th>
               <th width="150" (click)="sortAgents()" >Tên đại lí
                 <i class="fas fa-sort"></i>
               </th>
@@ -88,9 +147,6 @@
                      style="width: 45px; height: 45px; border-radius: 50%; border: 1px solid #ccc; padding: 2px;"></a></td>
               <td>{{item.nameEmployee}}</td>
               <td  class="table-td-center">
-                <button class="btn btn-primary btn-sm trash" type="button" title="Xóa" (click)="delete(item.id, item.nameAgent)">
-                  <i class="fas fa-trash-alt"></i>
-              </button>
                 <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp"
                         data-toggle="modal" data-target="#ModalUP" [routerLink]="['/editAgent/', item.id]">
                   <i class="fas fa-edit"></i>
@@ -143,5 +199,6 @@
     </div>
   </div>
 </main>
+
 
 

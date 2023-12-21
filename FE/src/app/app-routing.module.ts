@@ -23,7 +23,7 @@ const routes: Routes = [
   {path: 'agentsEmployee', component: ListEmployeeComponent},
   {path: 'agentsAdmin', component: ListAdminComponent, canActivate: [AdminService]},
   {path: 'editAgent/:id', component: EditComponent},
-  {path: 'editEmployee/:id', component: EditEmployeeComponent},
+  {path: 'editEmployee/:id', component: EditEmployeeComponent, canActivate: [AdminService]},
 ];
 
 @NgModule({

@@ -64,7 +64,7 @@
             </div>
 
             <div class="form-group col-md-6" style="display: flex; align-items: flex-end;">
-              <button class="btn btn-save" type="submit" [disabled]="(!formEditAgent.valid)">Lưu lại</button>
+              <button class="btn btn-save" type="submit" [disabled]="(!formEditAgent.valid) ">Lưu lại</button>
               <a class="btn btn-cancel" [routerLink]="accountRole === 'ROLE_ADMIN' ? '/agentsAdmin' : '/agentsEmployee'">Hủy bỏ</a>
             </div>
           </form>
