@@ -19,7 +19,14 @@ export class EmployeeService {
       'Authorization': `Bearer ${token}`
     });
     return this.httpClient.post<any>(this.api_url + '/list' + '?page=' + pageNumber, search,{ headers });
+  }
 
+  employeeListRestore(search: any, pageNumber: number): Observable<any> {
+    const token = this.tokenService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.httpClient.post<any>(this.api_url + '/listRestore' + '?page=' + pageNumber, search,{ headers });
   }
 
   detailUser(id: number | undefined): Observable<any> {
@@ -56,7 +63,17 @@ export class EmployeeService {
     });
   }
 
+  listEmployeesRestore(idList: number[]): Observable<any> {
+    return this.httpClient.post<any>(this.api_url + "/listEmployeeRestore", idList ,{
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    });
+  }
+
   remove(deleteIds: number[]): Observable<any> {
     return this.httpClient.post<any>(this.api_url + "/remove", deleteIds);
+  }
+
+  restore(deleteIds: number[]): Observable<any> {
+    return this.httpClient.post<any>(this.api_url + "/restore", deleteIds);
   }
 }

@@ -2,8 +2,9 @@
 <app-sidebar></app-sidebar>
 <main class="app-content">
   <div class="app-title" style="margin-top: 40px">
-    <ul class="app-breadcrumb breadcrumb side">
-      <li class="breadcrumb-item active"><a href="#"><b>Danh sách nhân viên</b></a></li>
+    <ul class="app-breadcrumb breadcrumb">
+      <li class="breadcrumb-item">Danh sách nhân viên</li>
+      <li class="breadcrumb-item"><a routerLink="/listEmployeeRestore">Danh sách đã xoá</a></li>
     </ul>
     <div id="clock"></div>
   </div>
@@ -15,22 +16,13 @@
 
           <div class="row element-button">
             <div class="col-sm-2">
-
-              <a class="btn btn-add btn-sm" routerLink="/signup" title="Thêm"><i class="fas fa-plus"></i>
-                Tạo mới nhân viên</a>
-            </div>
-            <div class="col-sm-2">
-              <a class="btn btn-excel btn-sm" (click)="exportToExcelAll()" title="In"><i class="fas fa-file-excel"></i> Xuất Excel</a>
-            </div>
-            <div class="col-sm-2">
-
-              <a class="btn btn-warning btn-sm" routerLink="/listEmployeeRestore" title="Thêm"><i class="fas fa-remove"></i>
-                Danh sách đã xoá</a>
+              <a class="btn btn-warning btn-sm" routerLink="/listEmployee" title="Thêm"><i class="fas fa-remove"></i>
+                Quay lại</a>
             </div>
           </div>
           <div class="row element-button ">
             <div class="col-md-8 ">
-              <form *ngIf="rfSearch" [formGroup]="rfSearch" (ngSubmit)="findAllForm(0)">
+              <form *ngIf="rfSearch" [formGroup]="rfSearch" (ngSubmit)="listEmployeeRestore(0)">
                 <div class="dataTables_filter" style="text-align: left;">
                   <label><strong>Tìm kiếm:</strong>
                     <input formControlName="name" type="search" class="form-control form-control-sm " placeholder="Nội dung tìm kiếm" aria-controls="sampleTable" style="border-radius: 5px; border: 1px solid #ccc; padding: 24px;">
@@ -47,7 +39,7 @@
                           </button>
                         </div>
                         <div class="modal-body">
-                          <table class="table table-bordered" *ngIf="listEmployees != null">
+                          <table class="table table-bordered" *ngIf="listEmployeesRestore != null">
                             <thead>
                             <tr>
                               <th width="150"  >Họ và tên</th>
@@ -56,7 +48,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr *ngFor="let item of listEmployees ; let i = index">
+                            <tr *ngFor="let item of listEmployeesRestore ; let i = index">
                               <td>{{item.name}}</td>
                               <td>{{item.phoneNumber}}</td>
                               <td>{{item.username}}</td>
@@ -64,7 +56,7 @@
                             </tbody>
                           </table>
 
-                          <div align="center" *ngIf="listEmployees == null">
+                          <div align="center" *ngIf="listEmployeesRestore == null">
                             <img src="https://i.pinimg.com/originals/49/e5/8d/49e58d5922019b8ec4642a2e2b9291c2.png" style="width: 350px; height: 350px;" alt="">
                             <h5>Không Tìm Thấy Dữ Liệu</h5>
                           </div>
@@ -72,7 +64,7 @@
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ bỏ</button>
-                          <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close" (click)="remove(this.addIds)">Xoá</button>
+                          <button type="button" class="btn btn-info " data-dismiss="modal" aria-label="Close" (click)="restore(this.addIds)" >Khôi phục</button>
                         </div>
                       </div>
                     </div>
@@ -81,8 +73,8 @@
               </form>
             </div>
             <div class="col-md-4 d-flex flex-column-reverse align-items-end">
-              <button type="button" class="btn btn-danger" data-toggle="modal" data-target=".bd-example-modal-lg">
-                Xoá
+              <button type="button" class="btn btn-info " data-toggle="modal" data-target=".bd-example-modal-lg">
+                Khôi phục
               </button>
             </div>
           </div>
@@ -91,58 +83,50 @@
             <thead>
             <tr>
               <th width="10">#</th>
-              <th width="150" (click)="sortAgents()" >Họ và tên
-                <i class="fas fa-sort"></i>
-              </th>
+              <th width="150" >Họ và tên</th>
               <th>Số điện thoại</th>
               <th>Tài khoản</th>
-              <th width="100">Tính năng</th>
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let item of employeeList?.content ; let i = index">
+            <tr *ngFor="let item of employeeListRestore?.content ; let i = index">
               <td width="10"><input type="checkbox" name="check1" value="1" [checked]="checkedAll" (click)="add(item.idAccount) "></td>
               <td>{{item.name}}</td>
               <td>{{item.phoneNumber}}</td>
               <td>{{item.username}}</td>
-              <td class="table-td-center">
-                <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp" [routerLink]="['/editEmployee/', item.id]"
-                        data-toggle="modal" data-target="#ModalUP"><i class="fas fa-edit"></i>
-                </button>
-              </td>
             </tr>
 
             </tbody>
           </table>
         </div>
-        <div class="col-12" *ngIf="employeeList !== null" >
+        <div class="col-12" *ngIf="employeeListRestore !== null" >
           <nav>
-            <ul class="pagination justify-content-center" *ngIf="employeeList">
+            <ul class="pagination justify-content-center" *ngIf="employeeListRestore">
               <li class="page-item"><a class="page-link"
                                        (click)="gotoPage(0)"> << </a></li>
-              <li class="page-item" *ngIf="employeeList.number - 2 > 0">
-                <a class="page-link" (click)="gotoPage(employeeList.number - 3)">{{employeeList.number - 2}}</a>
+              <li class="page-item" *ngIf="employeeListRestore.number - 2 > 0">
+                <a class="page-link" (click)="gotoPage(employeeListRestore.number - 3)">{{employeeListRestore.number - 2}}</a>
               </li>
-              <li class="page-item" *ngIf="employeeList.number - 1 > 0">
-                <a class="page-link" (click)="gotoPage(employeeList.number - 2)">{{employeeList.number - 1}}</a>
+              <li class="page-item" *ngIf="employeeListRestore.number - 1 > 0">
+                <a class="page-link" (click)="gotoPage(employeeListRestore.number - 2)">{{employeeListRestore.number - 1}}</a>
               </li>
-              <li class="page-item" *ngIf="employeeList.number > 0">
-                <a class="page-link" (click)="gotoPage(employeeList.number   - 1)">{{employeeList.number}}</a>
+              <li class="page-item" *ngIf="employeeListRestore.number > 0">
+                <a class="page-link" (click)="gotoPage(employeeListRestore.number   - 1)">{{employeeListRestore.number}}</a>
               </li>
 
-              <li class="page-item active"><a class="page-link">{{employeeList.number + 1}}</a></li>
+              <li class="page-item active"><a class="page-link">{{employeeListRestore.number + 1}}</a></li>
 
-              <li class="page-item" *ngIf="employeeList.number + 2 <= employeeList.totalPages">
-                <a class="page-link" (click)="gotoPage(employeeList.number + 1)">{{employeeList.number + 2}}</a>
+              <li class="page-item" *ngIf="employeeListRestore.number + 2 <= employeeListRestore.totalPages">
+                <a class="page-link" (click)="gotoPage(employeeListRestore.number + 1)">{{employeeListRestore.number + 2}}</a>
               </li>
-              <li class="page-item" *ngIf="employeeList.number + 3 <= employeeList.totalPages">
-                <a class="page-link" (click)="gotoPage(employeeList.number + 2)">{{employeeList.number + 3}}</a>
+              <li class="page-item" *ngIf="employeeListRestore.number + 3 <= employeeListRestore.totalPages">
+                <a class="page-link" (click)="gotoPage(employeeListRestore.number + 2)">{{employeeListRestore.number + 3}}</a>
               </li>
-              <li class="page-item" *ngIf="employeeList.number + 4 <= employeeList.totalPages">
-                <a class="page-link" (click)="gotoPage(employeeList.number + 3)">{{employeeList.number + 4}}</a>
+              <li class="page-item" *ngIf="employeeListRestore.number + 4 <= employeeListRestore.totalPages">
+                <a class="page-link" (click)="gotoPage(employeeListRestore.number + 3)">{{employeeListRestore.number + 4}}</a>
               </li>
               <li class="page-item"><a class="page-link"
-                                       (click)="gotoPage(employeeList.totalPages - 1)"> >> </a>
+                                       (click)="gotoPage(employeeListRestore.totalPages - 1)"> >> </a>
               </li>
             </ul>
           </nav>
@@ -151,4 +135,5 @@
     </div>
   </div>
 </main>
+
 

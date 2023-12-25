@@ -20,6 +20,7 @@ import { EditEmployeeComponent } from './component/employee/edit-employee/edit-e
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {CommonModule} from "@angular/common";
 import { RestoreComponent } from './component/Agent/restore/restore.component';
+import { ListRestoreComponent } from './component/employee/list-restore/list-restore.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { RestoreComponent } from './component/Agent/restore/restore.component';
     ListAdminComponent,
     EditComponent,
     EditEmployeeComponent,
-    RestoreComponent
+    RestoreComponent,
+    ListRestoreComponent
   ],
   imports: [
     BrowserModule,
