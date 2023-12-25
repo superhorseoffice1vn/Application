@@ -6,6 +6,9 @@ import * as XLSX from "xlsx";
 import {EmployeeDto} from "../../../dto/employee/employeeDto";
 import {TokenService} from "../../../service/security/token.service";
 import {Title} from "@angular/platform-browser";
+import {AgentsAdmin} from "../../../dto/agent/agentsAdmin";
+import Swal from "sweetalert2";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-list',
@@ -21,6 +24,9 @@ export class ListComponent implements OnInit {
   employees: EmployeeDto;
 
   // @ts-ignore
+  listEmployees: EmployeeDto[] = [];
+
+  // @ts-ignore
   rfSearch: FormGroup;
 
   // @ts-ignore
@@ -29,11 +35,15 @@ export class ListComponent implements OnInit {
   // @ts-ignore
   checkedAll: boolean = false;
 
+  // @ts-ignore
+  addIds: number[] = [];
+
   sortOrder: 'ASC' | 'DESC' = 'ASC';
 
 
   constructor(private employeeService: EmployeeService,
               private formBuilder: FormBuilder,
+              private toast: ToastrService,
               private _titleService: Title) {
     this._titleService.setTitle("Quản lý nhân viên")
   }
@@ -83,33 +93,6 @@ export class ListComponent implements OnInit {
     this.findAllForm(pageNumber);
   }
 
-  exportToExcel(): void {
-
-    const fieldMappings = [
-      { fieldName: 'name', excelName: 'Họ và Tên' },
-      { fieldName: 'phoneNumber', excelName: 'Số Điện Thoại' },
-      { fieldName: 'username', excelName: 'Tài khoản' },
-    ];
-
-    const exportedData = this.employeeList.content.map(item => {
-      const mappedItem: any = {};
-      fieldMappings.forEach(mapping => {
-        // @ts-ignore
-        mappedItem[mapping.excelName] = item[mapping.fieldName];
-      });
-      return mappedItem;
-    });
-    /* Tạo worksheet */
-    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportedData);
-
-    /* Tạo workbook và thêm worksheet vào workbook */
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Danh sách nhân viên');
-
-    /* Lưu vào file */
-    XLSX.writeFile(wb, 'du-lieu-xuat-excel.xlsx');
-  }
-
   exportToExcelAll(): void {
 
     const fieldMappings = [
@@ -127,21 +110,81 @@ export class ListComponent implements OnInit {
         });
         return mappedItem;
       });
-      /* Tạo worksheet */
       const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exportedData);
 
-      /* Tạo workbook và thêm worksheet vào workbook */
       const wb: XLSX.WorkBook = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, ws, 'Danh sách nhân viên');
 
-      /* Lưu vào file */
-      XLSX.writeFile(wb, 'du-lieu-xuat-excel.xlsx');
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = (now.getMonth() + 1).toString().padStart(2, '0');
+      const day = now.getDate().toString().padStart(2, '0');
+      const hours = now.getHours().toString().padStart(2, '0');
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+
+      const fileName = `${year}${month}${day}_${hours}${minutes}_danh-sach-nhan-vien-excel.xlsx`;
+
+      XLSX.writeFile(wb, fileName);
     }
   }
 
   toggleAllCheckboxes() {
     this.employeeList.content.forEach((item: any) => {
       item.isChecked = this.checkedAll;
+    });
+  }
+
+  listEmployeeSelect(){
+    this.employeeService.listEmployees(this.addIds).subscribe(
+      data => {
+        this.listEmployees = data;
+      }
+    )
+  }
+
+  add(id: number) {
+    const index = this.addIds.indexOf(id);
+
+    if (index > -1) {
+      this.addIds.splice(index, 1);
+    } else {
+      this.addIds.push(id);
+    }
+
+    if (this.addIds.length > 0) {
+      this.listEmployeeSelect();
+    } else {
+      this.listEmployees = [];
+    }
+  }
+
+  remove(addIds: number[]): void {
+    Swal.fire({
+      title: 'Bạn Có Muốn Xóa?',
+      text: 'Các nhân viên đã chọn ?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#BBBBBB',
+      confirmButtonText: 'Có',
+      cancelButtonText: 'Không'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.employeeService.remove(addIds).subscribe(() => {
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Xóa Thành Công ',
+            showConfirmButton: false,
+            timer: 2000
+          });
+          this.listEmployees = [];
+          this.addIds = [];
+          this.ngOnInit();
+        }, error => {
+          this.toast.warning('Vui lòng chọn nhân viên để xoá.');
+        });
+      }
     });
   }
 }

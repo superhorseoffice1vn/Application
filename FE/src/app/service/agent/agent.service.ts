@@ -60,13 +60,27 @@ export class AgentService {
     return this.httpClient.post<any>(this.api_url + "/remove", deleteIds);
   }
 
-  listAdminRestore(search: any, pageNumber: number): Observable<any> {
-    return this.httpClient.post<any>(this.api_url + '/listAdminRestore' + '?page=' + pageNumber, search);
+  restore(deleteIds: number[]): Observable<any> {
+    return this.httpClient.post<any>(this.api_url + "/restore", deleteIds);
   }
 
   listAgent(idList: number[]): Observable<any> {
     return this.httpClient.post<any>(this.api_url + "/listAgent", idList ,{
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     });
+  }
+
+  listAgentRestore(idList: number[]): Observable<any> {
+    return this.httpClient.post<any>(this.api_url + "/listAgentRestore", idList ,{
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    });
+  }
+
+  listRestore(search: any, pageNumber: number): Observable<any> {
+    const token = this.tokenService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.httpClient.post<any>(this.api_url + '/listAdminRestore' + '?page=' + pageNumber, search,{ headers });
   }
 }

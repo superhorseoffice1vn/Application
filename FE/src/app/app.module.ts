@@ -18,6 +18,8 @@ import { ListAdminComponent } from './component/Agent/list-admin/list-admin.comp
 import { EditComponent } from './component/Agent/edit/edit.component';
 import { EditEmployeeComponent } from './component/employee/edit-employee/edit-employee.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {CommonModule} from "@angular/common";
+import { RestoreComponent } from './component/Agent/restore/restore.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ListEmployeeComponent,
     ListAdminComponent,
     EditComponent,
-    EditEmployeeComponent
+    EditEmployeeComponent,
+    RestoreComponent
   ],
   imports: [
     BrowserModule,
@@ -44,6 +47,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NgbModule,
     BrowserModule,
     BrowserAnimationsModule,
+    CommonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

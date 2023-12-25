@@ -25,8 +25,6 @@ export class ListAdminComponent implements OnInit {
   // @ts-ignore
   pageAgent: PageAgentAdmin;
   // @ts-ignore
-  pageAgentRestore: PageAgentAdmin;
-  // @ts-ignore
   listAgent: AgentsAdmin[]
   // @ts-ignore
   rfSearch: FormGroup;
@@ -55,7 +53,6 @@ export class ListAdminComponent implements OnInit {
   ngOnInit(): void {
     this.searchForm();
     this.findAllAgents(0);
-    this.listAdminRestore(0);
     this.updateIds = [];
     this.findAllEmployees();
     this.getAll();
@@ -68,14 +65,6 @@ export class ListAdminComponent implements OnInit {
         this.pageAgent = data;
       }
     );
-  }
-
-  listAdminRestore(pageNumber: number){
-    this.agentService.listAdminRestore(this.rfSearch.value,pageNumber).subscribe(
-      data => {
-        this.pageAgentRestore = data;
-      }
-    )
   }
 
   listAgentSelect(){
@@ -129,6 +118,7 @@ export class ListAdminComponent implements OnInit {
     ];
 
     if (Array.isArray(this.agentAll)) {
+      // @ts-ignore
       const exportedData = this.agentAll.map((item: EmployeeDto) => {
         const mappedItem: any = {};
         fieldMappings.forEach(mapping => {
@@ -152,7 +142,16 @@ export class ListAdminComponent implements OnInit {
       const wb: XLSX.WorkBook = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, ws, 'Danh sách đại lý');
 
-      XLSX.writeFile(wb, 'danh-sach-dai-li-excel.xlsx');
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = (now.getMonth() + 1).toString().padStart(2, '0');
+      const day = now.getDate().toString().padStart(2, '0');
+      const hours = now.getHours().toString().padStart(2, '0');
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+
+      const fileName = `${year}${month}${day}_${hours}${minutes}_danh-sach-dai-li-excel.xlsx`;
+
+      XLSX.writeFile(wb, fileName);
     }
   }
 

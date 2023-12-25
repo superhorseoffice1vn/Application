@@ -49,4 +49,14 @@ export class EmployeeService {
   ListEmployee(): Observable<any>{
     return this.httpClient.get<any>(this.api_url + "/employees")
   }
+
+  listEmployees(idList: number[]): Observable<any> {
+    return this.httpClient.post<any>(this.api_url + "/listEmployee", idList ,{
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    });
+  }
+
+  remove(deleteIds: number[]): Observable<any> {
+    return this.httpClient.post<any>(this.api_url + "/remove", deleteIds);
+  }
 }

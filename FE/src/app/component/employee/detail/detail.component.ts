@@ -4,7 +4,6 @@ import {TokenService} from "../../../service/security/token.service";
 import {FormBuilder} from "@angular/forms";
 import {Title} from "@angular/platform-browser";
 import Swal from 'sweetalert2';
-import {User} from "../../../model/user/user";
 import {UserDetail} from "../../../model/user/user-detail";
 import {Account} from "../../../model/user/account";
 

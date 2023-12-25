@@ -9,3 +9,35 @@
   color: #008c04;
 }
 
+.custom-btn {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.custom-btn-col {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+.fa-trash-alt:before {
+  color: #ec4242;
+}
+
+.fa-edit:before{
+  color: #d0881f;
+}
+
+.fa-file-excel:before{
+  color: #008c04;
+}
+
+input[type="text" i]:focus{
+  border: 1px solid #dadada !important;
+}
+
+input[type="search" i]:focus{
+  border: 1px solid #dadada !important;
+}
+
+
+

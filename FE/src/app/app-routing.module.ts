@@ -12,11 +12,13 @@ import {ListEmployeeComponent} from "./component/Agent/list-employee/list-employ
 import {ListAdminComponent} from "./component/Agent/list-admin/list-admin.component";
 import {EditComponent} from "./component/Agent/edit/edit.component";
 import {EditEmployeeComponent} from "./component/employee/edit-employee/edit-employee.component";
+import {RestoreComponent} from "./component/Agent/restore/restore.component";
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
   {path: 'signup', component: SignupComponent, canActivate: [AdminService]},
   {path: 'listEmployee', component: ListComponent, canActivate: [AdminService]},
+  {path: 'listRestore', component: RestoreComponent, canActivate: [AdminService]},
   {path: 'detail', component: DetailComponent},
   {path: 'sidebar', component: SidebarComponent},
   {path: 'createAgent', component: CreateComponent},

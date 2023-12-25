@@ -6,4 +6,5 @@ export interface AgentsAdmin {
   address:string;
   locationGoogleMap:string;
   nameEmployee:string;
+  registrationDate:string;
 }

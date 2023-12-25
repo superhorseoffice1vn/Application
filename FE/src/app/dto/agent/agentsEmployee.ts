@@ -5,4 +5,5 @@ export interface AgentsEmployee {
   phoneNumber:string;
   address:string;
   locationGoogleMap:string;
+  registrationDate:string;
 }
