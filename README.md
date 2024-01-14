@@ -21,5 +21,4 @@ NOTE: currently we have a batch file on the server to get the latest code. This 
 ### TODO
 
 - [ ] For our temporary deployment, We still need to make the application auto restart when the application crash!
-- [ ] Create env file
 - [ ] setup new deployment workflow (Please, do more research and implement soon.)
