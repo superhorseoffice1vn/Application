@@ -1,17 +1,17 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Observable} from "rxjs";
-import {TokenService} from "../security/token.service";
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { TokenService } from '../security/token.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AgentService {
+  private API_URL = environment.API_URL;
+  api_url = `${this.API_URL}/api/agent`;
 
-  api_url = 'http://localhost:8080/api/agent'
-
-  constructor(private httpClient: HttpClient,
-              private tokenService: TokenService) { }
+  constructor(private httpClient: HttpClient, private tokenService: TokenService) {}
 
   createAgent(agent: any): Observable<any> {
     return this.httpClient.post<any>(this.api_url + '/create', agent);
@@ -24,13 +24,13 @@ export class AgentService {
   listAdmin(search: any, pageNumber: number): Observable<any> {
     const token = this.tokenService.getToken();
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     });
-    return this.httpClient.post<any>(this.api_url + '/listAdmin' + '?page=' + pageNumber, search,{ headers });
+    return this.httpClient.post<any>(this.api_url + '/listAdmin' + '?page=' + pageNumber, search, { headers });
   }
 
   agentById(id: number | undefined): Observable<any> {
-    return this.httpClient.get<any>(this.api_url + "/" + id);
+    return this.httpClient.get<any>(this.api_url + '/' + id);
   }
 
   updateAgent(agent: any, id: string): Observable<any> {
@@ -43,7 +43,7 @@ export class AgentService {
   updateEmployees(id: number, idList: number[]): Observable<any> {
     const requestBody = {
       id: id,
-      idList: idList
+      idList: idList,
     };
     return this.httpClient.put<any>(this.api_url + '/updateEmployeeId', requestBody);
   }
@@ -51,36 +51,36 @@ export class AgentService {
   getAll(): Observable<any> {
     const token = this.tokenService.getToken();
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     });
-    return this.httpClient.get<any>(this.api_url + "/allAgent",{ headers });
+    return this.httpClient.get<any>(this.api_url + '/allAgent', { headers });
   }
 
   remove(deleteIds: number[]): Observable<any> {
-    return this.httpClient.post<any>(this.api_url + "/remove", deleteIds);
+    return this.httpClient.post<any>(this.api_url + '/remove', deleteIds);
   }
 
   restore(deleteIds: number[]): Observable<any> {
-    return this.httpClient.post<any>(this.api_url + "/restore", deleteIds);
+    return this.httpClient.post<any>(this.api_url + '/restore', deleteIds);
   }
 
   listAgent(idList: number[]): Observable<any> {
-    return this.httpClient.post<any>(this.api_url + "/listAgent", idList ,{
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    return this.httpClient.post<any>(this.api_url + '/listAgent', idList, {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     });
   }
 
   listAgentRestore(idList: number[]): Observable<any> {
-    return this.httpClient.post<any>(this.api_url + "/listAgentRestore", idList ,{
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    return this.httpClient.post<any>(this.api_url + '/listAgentRestore', idList, {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     });
   }
 
   listRestore(search: any, pageNumber: number): Observable<any> {
     const token = this.tokenService.getToken();
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     });
-    return this.httpClient.post<any>(this.api_url + '/listAdminRestore' + '?page=' + pageNumber, search,{ headers });
+    return this.httpClient.post<any>(this.api_url + '/listAdminRestore' + '?page=' + pageNumber, search, { headers });
   }
 }

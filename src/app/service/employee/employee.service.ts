@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {TokenService} from "../security/token.service";
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
-
-  api_url = 'http://localhost:8080/api/employee'
+  private API_URL = environment.API_URL;
+  api_url = `${this.API_URL}/api/employee`
 
   constructor(private httpClient: HttpClient,
               private tokenService: TokenService) { }

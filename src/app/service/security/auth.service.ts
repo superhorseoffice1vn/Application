@@ -3,13 +3,15 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {LoginForm} from "../../model/security/login-form";
 import {Observable} from "rxjs";
 import {TokenService} from "./token.service";
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  api_url = 'http://localhost:8080/api/auth'
+  private API_URL = environment.API_URL;
+  api_url = `${this.API_URL}/api/auth`
 
   constructor(private httpClient: HttpClient,
               private tokenService: TokenService,) {
