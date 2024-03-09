@@ -19,7 +19,11 @@ export class AuthService {
 
 
   login(loginForm: LoginForm): Observable<any> {
-    return this.httpClient.post<any>(this.api_url + '/login', loginForm);
+
+    const headers = new HttpHeaders({
+      'Access-Control-Allow-Origin': '*'
+    });
+    return this.httpClient.post<any>(this.api_url + '/login', loginForm, {headers});
   }
 
   createUser(user: any): Observable<any> {
