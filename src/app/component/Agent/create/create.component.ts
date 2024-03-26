@@ -33,7 +33,7 @@ export class CreateComponent implements OnInit {
     private toast: ToastrService,
     private router: Router,
     private _titleService: Title) {
-    this._titleService.setTitle("Thêm mới đại lí")
+    this._titleService.setTitle("Thêm mới đại lý")
   }
 
   ngOnInit(): void {

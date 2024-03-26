@@ -85,7 +85,7 @@ export class RestoreComponent implements OnInit {
   restore(updateIds: number[]): void {
     Swal.fire({
       title: 'Bạn Có Muốn Khôi Phục?',
-      text: 'Các đại lí đã chọn ?',
+      text: 'Các đại lý đã chọn ?',
       icon: 'question',
       showCancelButton: true,
       confirmButtonColor: '#d33',

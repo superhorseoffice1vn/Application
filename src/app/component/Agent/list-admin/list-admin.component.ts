@@ -47,7 +47,7 @@ export class ListAdminComponent implements OnInit {
     private toast: ToastrService,
     private employeeService : EmployeeService,
     private _titleService: Title) {
-    this._titleService.setTitle("Quản lý đại lí")
+    this._titleService.setTitle("Quản lý đại lý")
   }
 
   ngOnInit(): void {
@@ -205,7 +205,7 @@ export class ListAdminComponent implements OnInit {
   remove(updateIds: number[]): void {
     Swal.fire({
       title: 'Bạn Có Muốn Xóa?',
-      text: 'Các đại lí đã chọn ?',
+      text: 'Các đại lý đã chọn ?',
       icon: 'question',
       showCancelButton: true,
       confirmButtonColor: '#d33',

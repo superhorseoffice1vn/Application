@@ -2,7 +2,7 @@
 <main class="app-content">
   <div class="app-title" style="margin-top: 40px">
     <ul class="app-breadcrumb breadcrumb side">
-      <li class="breadcrumb-item active"><a routerLink="/agentsEmployee"><b>Quản lý đại lí</b></a></li>
+      <li class="breadcrumb-item active"><a routerLink="/agentsEmployee"><b>Quản lý đại lý</b></a></li>
     </ul>
     <div id="clock"></div>
   </div>
@@ -45,7 +45,7 @@
                           <table class="table table-bordered" *ngIf="listAgent != null">
                             <thead>
                             <tr>
-                              <th width="150"  >Tên đại lí</th>
+                              <th width="150"  >Tên đại lý</th>
                               <th>Họ và tên người liên lạc</th>
                               <th>Số điện thoại liên lạc</th>
                               <th>Địa chỉ</th>
@@ -124,7 +124,7 @@
             <thead>
             <tr>
               <th width="10">#</th>
-              <th width="150" (click)="sortAgents()" >Tên đại lí
+              <th width="150" (click)="sortAgents()" >Tên đại lý
                 <i class="fas fa-sort"></i>
               </th>
               <th>Họ và tên người liên lạc</th>

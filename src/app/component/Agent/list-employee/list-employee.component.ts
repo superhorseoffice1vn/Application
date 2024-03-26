@@ -28,7 +28,7 @@ export class ListEmployeeComponent implements OnInit {
     private formBuilder: FormBuilder,
     private tokenService: TokenService,
     private _titleService: Title) {
-    this._titleService.setTitle("Quản lý đại lí")
+    this._titleService.setTitle("Quản lý đại lý")
   }
 
   ngOnInit(): void {
@@ -72,7 +72,7 @@ export class ListEmployeeComponent implements OnInit {
   delete(id: number, name: string): void {
     Swal.fire({
       title: 'Bạn Có Muốn Xóa?',
-      text: 'Tên đại lí: ' + name + ' Không ?',
+      text: 'Tên đại lý: ' + name + ' Không ?',
       icon: 'question',
       showCancelButton: true,
       confirmButtonColor: '#d33',

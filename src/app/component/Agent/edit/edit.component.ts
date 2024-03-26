@@ -47,7 +47,7 @@ export class EditComponent implements OnInit {
     private router: Router,
     private employeeService : EmployeeService,
     private _titleService: Title) {
-    this._titleService.setTitle("Chỉnh sửa đại lí")
+    this._titleService.setTitle("Chỉnh sửa đại lý")
   }
 
   ngOnInit(): void {
